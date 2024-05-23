@@ -1,8 +1,6 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import requests
 from bs4 import BeautifulSoup
-
-
 
 app = Flask(__name__)
 
@@ -40,6 +38,10 @@ def get_rhymes_with_meanings(word):
         rhymes_with_meanings.append({"word": rw, "meaning": meaning})
     return rhymes_with_meanings
 
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 @app.route('/api/rhyme', methods=['GET'])
 def rhyme():
     word = request.args.get('word')
@@ -51,3 +53,4 @@ def rhyme():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
