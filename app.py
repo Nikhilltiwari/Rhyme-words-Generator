@@ -29,13 +29,18 @@ def get_meaning(word):
     else:
         return "Meaning not found."
 
-# Function to integrate rhyming words and their meanings
+# Function to integrate rhyming words and their meanings, limited to 10 words
 def get_rhymes_with_meanings(word):
     rhyming_words = get_rhyming_words(word)
     rhymes_with_meanings = []
+    count = 0
     for rw in rhyming_words:
+        if count >= 10:
+            break
         meaning = get_meaning(rw)
-        rhymes_with_meanings.append({"word": rw, "meaning": meaning})
+        if meaning != "Meaning not found.":
+            rhymes_with_meanings.append({"word": rw, "meaning": meaning})
+            count += 1
     return rhymes_with_meanings
 
 @app.route('/')
