@@ -4,58 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rhyme Finder</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #333;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        input[type="text"] {
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            padding: 10px;
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        .result {
-            margin-top: 20px;
-        }
-        .word {
-            font-weight: bold;
-            color: #007bff;
-        }
-        .meaning {
-            margin-left: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
@@ -66,25 +15,39 @@
         </form>
         <div id="results" class="result"></div>
     </div>
+    <div class="footer">
+        Developed by - Nikhil Kumar Tiwari
+    </div>
     <script>
         document.getElementById('rhymeForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const word = document.getElementById('wordInput').value;
+            console.log(`Fetching rhymes for: ${word}`);
             fetch(`/api/rhyme?word=${word}`)
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
                 .then(data => {
+                    console.log(data);
                     const resultsDiv = document.getElementById('results');
                     resultsDiv.innerHTML = '';
                     if (data.error) {
                         resultsDiv.innerHTML = `<p>${data.error}</p>`;
                     } else {
                         data.forEach(item => {
-                            resultsDiv.innerHTML += `<p><span class="word">${item.word}</span>:<span class="meaning">${item.meaning}</span></p>`;
+                            resultsDiv.innerHTML += `<p><span class="word">${item.word}</span>: <span class="meaning">${item.meaning}</span></p>`;
                         });
                     }
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
                 });
         });
     </script>
 </body>
 </html>
+
 
