@@ -9,11 +9,13 @@
 <body>
     <div class="container">
         <h1>Rhyme Finder</h1>
+        <p class="description">Enter a word to find rhyming words and their meanings.</p>
         <form id="rhymeForm">
             <input type="text" id="wordInput" placeholder="Enter a word" required>
             <button type="submit">Find Rhymes</button>
         </form>
         <div id="results" class="result"></div>
+        <button id="backButton" style="display:none; margin-top: 10px;">Find New Rhymes</button>
     </div>
     <div class="footer">
         Developed by - Nikhil Kumar Tiwari
@@ -33,18 +35,26 @@
                 .then(data => {
                     console.log(data);
                     const resultsDiv = document.getElementById('results');
+                    const backButton = document.getElementById('backButton');
                     resultsDiv.innerHTML = '';
                     if (data.error) {
                         resultsDiv.innerHTML = `<p>${data.error}</p>`;
                     } else {
                         data.forEach(item => {
-                            resultsDiv.innerHTML += `<p><span class="word">${item.word}</span>: <span class="meaning">${item.meaning}</span></p>`;
+                            resultsDiv.innerHTML += `<p><span class="word">${item.word}</span><span class="meaning">${item.meaning}</span></p>`;
                         });
                     }
+                    backButton.style.display = 'block';
                 })
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);
                 });
+        });
+
+        document.getElementById('backButton').addEventListener('click', function() {
+            document.getElementById('results').innerHTML = '';
+            document.getElementById('backButton').style.display = 'none';
+            document.getElementById('wordInput').value = '';
         });
     </script>
 </body>

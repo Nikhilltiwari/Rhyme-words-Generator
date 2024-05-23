@@ -1,6 +1,6 @@
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f0f2f5;
+    background-color: #e9ecef;
     margin: 0;
     padding: 0;
     display: flex;
@@ -21,8 +21,14 @@ body {
 }
 
 h1 {
-    color: #333;
+    color: #343a40;
+    margin-bottom: 10px;
+}
+
+.description {
+    color: #6c757d;
     margin-bottom: 20px;
+    font-size: 16px;
 }
 
 form {
@@ -34,7 +40,7 @@ form {
 input[type="text"] {
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #ced4da;
     border-radius: 5px;
     width: 80%;
     max-width: 400px;
@@ -71,15 +77,20 @@ button:hover {
     border-radius: 5px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .word {
     font-weight: bold;
     color: #007bff;
+    margin-right: 10px;
 }
 
 .meaning {
-    margin-left: 10px;
+    color: #495057;
+    flex: 1;
 }
 
 .footer {
